@@ -1,0 +1,31 @@
+{
+    "users": [
+        {
+            "id": "1",
+            "firstName": "Byron",
+            "lastName": "de Villiers",
+            "cellPhone": "0829123465",
+            "email": "byron@mail.com",
+            "password": "P@ssword",
+            "role": "provider"
+        },
+        {
+            "id": "2",
+            "firstName": "2",
+            "lastName": "de 2",
+            "cellPhone": "2",
+            "email": "2@2.com",
+            "password": "2@2",
+            "role": "2"
+        },
+        {
+            "id": "34",
+            "firstName": "Ally",
+            "lastName": "Borge",
+            "cellPhone": "222",
+            "email": "borge@mail.com",
+            "password": "P@ssword23",
+            "role": "admin"
+        }
+    ]
+}
