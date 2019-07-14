@@ -9,7 +9,7 @@ router.get("/", function (req, res) {
     
     //let user = new User(3, "Joe", "joe@mail.com", 123);
     User.prototype
-        .getUsers()
+        .getAll()
         .then(users => {
             res.send(users);
         })
@@ -23,7 +23,7 @@ router.post("/", function (req, res) {
     
     //let user = new User(3, "Joe", "joe@mail.com", 123);
     User.prototype
-        .createUser(req.body)
+        .create(req.body)
         .then(users => {
             console.log(users);
             res.send(users);
@@ -37,7 +37,7 @@ router.post("/", function (req, res) {
 router.get("/getByID", function (req, res) {
     
     User.prototype
-        .getUserByID(req.body.id)
+        .getByID(req.body.id)
         .then(user => {
             res.send(user);
         })
@@ -50,7 +50,7 @@ router.get("/getByID", function (req, res) {
 router.post("/updateByID", function (req, res) {
     
     User.prototype
-        .updateUserByID(req.body.id, req.body)
+        .updateByID(req.body.id, req.body)
         .then(user => {
             res.send(user);
         })
@@ -63,7 +63,7 @@ router.post("/updateByID", function (req, res) {
 router.post("/delete", function (req, res) {
     
     User.prototype
-        .deleteUser(req.body.id)
+        .delete(req.body.id)
         .then(user => {
             res.send(user);
         })

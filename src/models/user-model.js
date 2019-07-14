@@ -31,7 +31,7 @@ module.exports = class User {
     } */ 
 
     // Working
-    getUsers() {
+    getAll() {
       return new Promise((resolve, reject) => {
         mysqlConn.query("Select * from user", function(err, res) {
             if (err) {
@@ -59,7 +59,7 @@ module.exports = class User {
     }
 
     // Working
-    createUser(AuthUser) {
+    create(AuthUser) {
       return new Promise((resolve, reject) => {
         mysqlConn.query("INSERT INTO user set ?", AuthUser, function(err, res) {
             if (err) {
@@ -98,7 +98,7 @@ module.exports = class User {
     }
 
     // Working
-    getUserByID(userId){
+    getByID(userId){
       return new Promise((resolve, reject) => {
         mysqlConn.query("Select * from user where id = ? ", userId, function(
             err,
@@ -115,7 +115,7 @@ module.exports = class User {
     }
 
     // Working 
-    updateUserByID(userId, user){
+    updateByID(userId, user){
       return new Promise((resolve, reject) => {
         mysqlConn.query(
             "UPDATE user SET firstName = ?,lastName = ?, cellPhone = ?, email = ?, password = ? WHERE id = ?",
@@ -133,7 +133,7 @@ module.exports = class User {
     }
 
     // Working
-    deleteUser(userId){
+    delete(userId){
       return new Promise((resolve, reject) => {
         mysqlConn.query("DELETE FROM user WHERE id = ?", userId, function(err, res) {
             if (err) {

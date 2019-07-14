@@ -1,7 +1,19 @@
 const express = require("express");
 const router = express.Router();
-const User = require('../models/user-model');
+//const User = require('../models/user-model');
+const authService = require('../services/auth-service');
 
+router.post("/login", function (req, res) {
+    authService.prototype
+        .login(req.body.email, req.body.password)
+        .then(user => {
+            res.send(user);
+        })
+        .catch(err => {
+            res.status(400).send(err);
+        });
+});
+/* 
 router.post("/login", (req, res) => {
     // login strategy
     // get users
@@ -31,5 +43,5 @@ router.post("/login", (req, res) => {
         });
 
 })
-
+ */
 module.exports = router;

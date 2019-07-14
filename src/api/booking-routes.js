@@ -7,7 +7,7 @@ const Booking = require("../models/booking-model.js");
 // Working
 router.get("/", function (req, res) {
     Booking.prototype
-        .getBookings()
+        .getAll()
         .then(booking => {
             res.send(booking);
         })
@@ -19,7 +19,7 @@ router.get("/", function (req, res) {
 // Working 
 router.post("/", function (req, res) {
         Booking.prototype
-        .createBooking(req.body)
+        .create(req.body)
         .then(booking => {
             res.send(booking);
         })
@@ -32,7 +32,7 @@ router.post("/", function (req, res) {
 router.get("/getByID", function (req, res) {
     
     Booking.prototype
-        .getBookingByID(req.body.id)
+        .getByID(req.body.id)
         .then(booking => {
             res.send(booking);
         })
@@ -45,7 +45,7 @@ router.get("/getByID", function (req, res) {
 router.post("/updateByID", function (req, res) {
     
     Booking.prototype
-        .updateBookingByID(req.body.id, req.body)
+        .updateByID(req.body.id, req.body)
         .then(booking => {
             res.send(booking);
         })
@@ -58,7 +58,7 @@ router.post("/updateByID", function (req, res) {
 router.post("/delete", function (req, res) {
     
     Booking.prototype
-        .deleteBooking(req.body.id)
+        .delete(req.body.id)
         .then(booking => {
             res.send(booking);
         })

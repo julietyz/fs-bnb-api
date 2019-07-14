@@ -9,7 +9,7 @@ router.get("/", function (req, res) {
     
     //let user = new User(3, "Joe", "joe@mail.com", 123);
     Listing.prototype
-        .getListings()
+        .getAll()
         .then(listing => {
             res.send(listing);
         })
@@ -23,7 +23,7 @@ router.post("/", function (req, res) {
     
     //let user = new User(3, "Joe", "joe@mail.com", 123);
     Listing.prototype
-        .createListing(req.body)
+        .create(req.body)
         .then(listing => {
             res.send(listing);
         })
@@ -36,7 +36,7 @@ router.post("/", function (req, res) {
 router.get("/getByID", function (req, res) {
     
     Listing.prototype
-        .getListingByID(req.body.id)
+        .getByID(req.body.id)
         .then(listing => {
             res.send(listing);
         })
@@ -49,7 +49,7 @@ router.get("/getByID", function (req, res) {
 router.post("/updateByID", function (req, res) {
     
     Listing.prototype
-        .updateListingByID(req.body.id, req.body)
+        .updateByID(req.body.id, req.body)
         .then(listing => {
             res.send(listing);
         })
@@ -62,7 +62,7 @@ router.post("/updateByID", function (req, res) {
 router.post("/delete", function (req, res) {
     
     Listing.prototype
-        .deleteListing(req.body.id)
+        .delete(req.body.id)
         .then(listing => {
             res.send(listing);
         })
