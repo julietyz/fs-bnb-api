@@ -3,14 +3,13 @@ var mysqlConn = require("../database/database");
 
 module.exports = class Booking {
 
-    constructor(newID, newServiceProviderName, newName,  newLocation, newPrice, newDate, newDescription) {
+    constructor(newID, newListingID, newUserID,  newDateFrom, newDateTo) {
       this.id = newID;
-      this.serviceProviderName = newServiceProviderName;
-      this.name = newName;
-      this.location = newLocation;
-      this.newPrice = newPrice;
-      this.date = newDate;
-      this.description = newDescription;
+      this.listingID = newListingID;
+      this.userID = newUserID;
+      this.dateFrom = newDateFrom;
+      this.dateTo = newDateTo;
+    
     }
 
     // Working
