@@ -1,4 +1,3 @@
-var mysqlConn = require("../database/database");
 const User = require("../models/user-model.js");
 
 var userFound = 0;
@@ -41,7 +40,6 @@ module.exports = class AuthService{
           .catch(err => {
               reject(err);
           });
-
 
       });
       

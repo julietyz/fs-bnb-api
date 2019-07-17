@@ -34,10 +34,10 @@ router.post("/", function (req, res) {
 });
 
 // Working
-router.get("/getByID", function (req, res) {
+router.get("/getByID/:id", function (req, res) {
     
     User.prototype
-        .getByID(req.body.id)
+        .getByID(parseInt(req.params.id))
         .then(user => {
             res.send(user);
         })

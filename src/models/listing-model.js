@@ -11,7 +11,7 @@ module.exports = class Listing {
         this.location = newLocation;
         this.newPrice = newPrice;
         this.description = newDescription;
-        this.imageURLS = [];
+        this.imgUrl = [];
     }
     
     // Working
@@ -26,7 +26,61 @@ module.exports = class Listing {
               resolve(res);
             }
           });
+        }); 
+
+/*
+// My Idea
+          return new Promise((resolve, reject) => {
+           mysqlConn.query("SELECT * from listing", function(err, res) {
+              if (err) {
+                console.log("error: ", err);
+                reject(err);
+              } 
+              let listings = res;
+               
+              listings.forEach(listing =>{
+                listing.imgUrl = [];
+                mysqlConn.query("SELECT * from listing_image_mapping WHERE listingId = " + listing.id, function(err, res){
+                  if(err){
+                    console.log("error: ", err);
+                    reject(err);
+                }
+                let imgUrls = res;
+                imgUrls.forEach(imgUrl =>{
+                    listing.imgUrl.push(imgUrl.imageURL);
+                  })
+                })
+              });
+              resolve(listings);
+              })  
+            })
+            */
+
+/* 
+//What Byron Had
+  
+              mysqlConn.query(
+                "Select * from listing_image_mapping WHERE listingId = 1"),
+                //in (SELECT id FROM " + listings + ")",
+                function(err, res){
+                  if(err){
+                    console.log("error: ", err);
+                    reject(err);
+                  } else {
+                  listings.forEach(listing => {
+                    listing.imgUrl = [];
+                    res.forEach(imgUrl =>{
+                      if(imgUrl.listingId == listing.id){
+                        listing.imgUrl.push(imgUrl.imgUrl);
+                      }
+                    });
+                  });
+                  console.log("Listings : ", res);
+                  resolve(res);
+              }
+          });
         });
+      /*}) */
     }
 
     // Working
