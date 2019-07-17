@@ -10,6 +10,7 @@ const usersRouter = require('./src/api/user-routes');
 const listingRouter = require('./src/api/listing-routes');
 const bookingRouter = require('./src/api/booking-routes');
 const authRouter = require('./src/api/auth-routes');
+const imageMapURLRouter = require('./src/api/imageURLMap-routes');
 
 //const users = require('./src/models/user-model');
 app.use(express.json());
@@ -24,6 +25,7 @@ app.use('/api/user', usersRouter);
 app.use('/api/listing', listingRouter);
 app.use('/api/booking', bookingRouter);
 app.use('/api/auth', authRouter);
+app.use('/api/imgMap', imageMapURLRouter);
 
 /*app.get('/api/user', (req,res) => {
     res.send(users);
