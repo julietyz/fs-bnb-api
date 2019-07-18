@@ -57,21 +57,21 @@ module.exports = class User {
             });
         });
     }
-
-    // Working
-    create(AuthUser) {
+    
+    create(AuthUser){
       return new Promise((resolve, reject) => {
         mysqlConn.query("INSERT INTO user set ?", AuthUser, function(err, res) {
-            if (err) {
-              console.log("error: ", err);
-              reject(err);
-            } else {
-              console.log(res);
-              resolve(res);
-            }
-          });
+          if (err) {
+            console.log("error: ", err);
+            reject(err);
+          } else {
+            console.log(res);
+            resolve(res);
+          }
         });
+      });
     }
+
 
     createUserJSON(AuthUser) {
         return new Promise((resolve, reject) => {

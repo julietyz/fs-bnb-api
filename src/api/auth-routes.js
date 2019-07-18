@@ -13,6 +13,18 @@ router.post("/login", function (req, res) {
             res.status(400).send(err);
         });
 });
+
+router.post("/register", function (req, res) {
+    console.log("registering user");
+    authService.prototype
+        .register(req.body)
+        .then(user => {
+            res.send(user);
+        })
+        .catch(err => {
+            res.status(400).send(err);
+        });
+});
 /* 
 router.post("/login", (req, res) => {
     // login strategy

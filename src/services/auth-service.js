@@ -44,6 +44,29 @@ module.exports = class AuthService{
       });
       
       }
+
+      register(AuthUser) {
+        return new Promise((resolve, reject) => {
+  
+          User.prototype.getAll().then(users => {
+            const dbUser = users.filter(user =>{
+              return user.email == AuthUser.email
+            });
+            if(dbUser.length >= 1){
+              reject("User email is already registered");
+            } else {
+              User.prototype.create(AuthUser).then(user =>{
+                resolve(user);
+              }).catch(err => {
+                reject(err);
+              })
+            }
+  
+          }).catch(err => {
+            reject(err);
+          })
+          });
+      }
 };
 
 
