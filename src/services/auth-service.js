@@ -30,11 +30,11 @@ module.exports = class AuthService{
               }
           })
           if(userFound >= 1){
-            resolve("Incorrect Password");
+            reject("Incorrect Password");
             userFound = 0;
           }
           if(userFound == 0){
-            resolve("User not found");
+            reject("User not found");
           }
         })
           .catch(err => {
