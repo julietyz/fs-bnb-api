@@ -4,9 +4,9 @@ var mysqlConn = require("../database/database");
 
 module.exports = class Listing {
 
-    constructor(newID, newServiceProviderName, newName, newLocation,  newPrice, newDescription) {
+    constructor(newID, newproviderID, newName, newLocation,  newPrice, newDescription) {
         this.id = newID;
-        this.serviceProviderName = newServiceProviderName;
+        this.providerID = newproviderID;
         this.name = newName;
         this.location = newLocation;
         this.newPrice = newPrice;
@@ -23,7 +23,31 @@ module.exports = class Listing {
               reject(err);
             } else {
               console.log("Listings : ", res);
-              resolve(res);
+              //resolve(res);
+              let listings = res;
+              mysqlConn.query(
+                "Select * from listing_image_mapping WHERE listingID in (SELECT id FROM listing);",
+                //in (SELECT id FROM " + listings + ")",
+                function(err, res){
+                  if(err){
+                    console.log("error: ", err);
+                    reject(err);
+                  } else {
+                  listings.forEach(listing => {
+
+                    listing.imgUrl = [];
+
+                    res.forEach(imgUrl =>{
+                      if(imgUrl.listingID == listing.id){
+                        listing.imgUrl.push(imgUrl.imageURL);
+                      }
+                    });
+                  });
+                  console.log("Listings : ", res);
+                  resolve(listings);
+              }
+          });
+
             }
           });
         }); 
@@ -56,31 +80,9 @@ module.exports = class Listing {
             })
             */
 
-/* 
+ 
 //What Byron Had
   
-              mysqlConn.query(
-                "Select * from listing_image_mapping WHERE listingId = 1"),
-                //in (SELECT id FROM " + listings + ")",
-                function(err, res){
-                  if(err){
-                    console.log("error: ", err);
-                    reject(err);
-                  } else {
-                  listings.forEach(listing => {
-                    listing.imgUrl = [];
-                    res.forEach(imgUrl =>{
-                      if(imgUrl.listingId == listing.id){
-                        listing.imgUrl.push(imgUrl.imgUrl);
-                      }
-                    });
-                  });
-                  console.log("Listings : ", res);
-                  resolve(res);
-              }
-          });
-        });
-      /*}) */
     }
 
     // Working
@@ -109,11 +111,44 @@ module.exports = class Listing {
               console.log("error: ", err);
               reject(err);
             } else {
-              resolve(res);
+
+              console.log("Listings : ", res);
+              //resolve(res);
+              let listings = res;
+              mysqlConn.query(
+                "Select * from listing_image_mapping WHERE listingID in (SELECT id FROM listing);",
+                //in (SELECT id FROM " + listings + ")",
+                function(err, res){
+                  if(err){
+                    console.log("error: ", err);
+                    reject(err);
+                  } else {
+                  listings.forEach(listing => {
+
+                    listing.imgUrl = [];
+
+                    res.forEach(imgUrl =>{
+                      if(imgUrl.listingID == listing.id){
+                        listing.imgUrl.push(imgUrl.imageURL);
+                      }
+                    });
+                  });
+                  console.log("Listings : ", res);
+                  resolve(listings);
+              }
+          });
+
+
+
+
+
+
+              //resolve(res);
             }
           });
         });
     }
+
     // Working
     updateByID(listingId, listing){
       return new Promise((resolve, reject) => {
