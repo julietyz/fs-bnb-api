@@ -43,7 +43,23 @@ module.exports = class Booking {
 
     getByID(bookingID){
       return new Promise((resolve, reject) => {
-        mysqlConn.query("Select * from booking where id = ? ", bookingID, function(
+        mysqlConn.query("Select * from booking where bookingID = ?", bookingID, function(
+            err,
+            res
+          ) {
+            if (err) {
+              console.log("error: ", err);
+              reject(err);
+            } else {
+              resolve(res);
+            }
+          });
+        });
+    }
+
+    getByUserID(userID){
+      return new Promise((resolve, reject) => {
+        mysqlConn.query("Select * from booking where userID = ? ", userID, function(
             err,
             res
           ) {

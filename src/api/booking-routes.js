@@ -29,10 +29,22 @@ router.post("/", function (req, res) {
 });
 
 // Working
-router.get("/getByID", function (req, res) {
+router.get("/getByID/:id", function (req, res) {
     
     Booking.prototype
-        .getByID(req.body.id)
+        .getByID(parseInt(req.params.id))
+        .then(booking => {
+            res.send(booking);
+        })
+        .catch(err => {
+            res.status(400).send(err);
+        });
+});
+
+router.get("/getByUserID/:id", function (req, res) {
+    
+    Booking.prototype
+        .getByUserID(parseInt(req.params.id))
         .then(booking => {
             res.send(booking);
         })

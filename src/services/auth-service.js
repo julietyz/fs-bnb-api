@@ -1,10 +1,16 @@
 const User = require("../models/user-model.js");
+var bcrypt = require('bcryptjs');
 
 var userFound = 0;
 
 module.exports = class AuthService{
 
     constructor() {}
+
+    hashPassword(password){
+      const salt = bcrypt.genSaltSync(10);
+      return bcrypt.hashSync(password, salt);
+    }
 
     login(authEmail, authPassword){
       return new Promise((resolve, reject) => {
@@ -16,10 +22,15 @@ module.exports = class AuthService{
               if (user.email == authEmail) {
                   userFound++;
                   // validate password
-                  if (user.password == authPassword) {
+                  //const authPasswordHash = this.hashPassword(authPassword);
+
+                  const match = bcrypt.compareSync(authPassword, user.password)
+                  if (match) {
                       // sucess
                       userFound = 0;
                       resolve(user);
+
+
                   } else {
                       // fail wrong password
                       //resolve("Incorrect Password");
@@ -55,7 +66,21 @@ module.exports = class AuthService{
             if(dbUser.length >= 1){
               reject("User email is already registered");
             } else {
-              User.prototype.create(AuthUser).then(user =>{
+
+              const passwordHash = this.hashPassword(AuthUser.password);
+              console.log(passwordHash);
+
+              const newUser =
+                {
+                  firstName: AuthUser.firstName,
+                  lastName: AuthUser.lastName,
+                  cellPhone: AuthUser.cellPhone,
+                  email: AuthUser.email,
+                  password: passwordHash,
+                  role: "user"
+                };
+
+              User.prototype.create(newUser).then(user =>{
                 resolve(user);
               }).catch(err => {
                 reject(err);
