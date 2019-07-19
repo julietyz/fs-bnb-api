@@ -1,11 +1,11 @@
-const User = require("../models/user-model.js");
+const Provider = require("../models/provider-model.js");
 var bcrypt = require('bcryptjs');
 //var jwt = require ('jsonwebtoken');
 
 
-var userFound = 0;
+var providerFound = 0;
 
-module.exports = class AuthService{
+module.exports = class ProviderAuthService{
 
     constructor() {}
 
@@ -38,21 +38,21 @@ module.exports = class AuthService{
 
     login(authEmail, authPassword){
       return new Promise((resolve, reject) => {
-        User.prototype.getAll().then(users => {
+        Provider.prototype.getAll().then(provider => {
           // get current person
           // loop through users
-          users.forEach(user => {
+          provider.forEach(provider => {
               // validate email
-              if (user.email == authEmail) {
-                  userFound++;
+              if (provider.email == authEmail) {
+                providerFound++;
                   // validate password
                   //const authPasswordHash = this.hashPassword(authPassword);
 
-                  const match = bcrypt.compareSync(authPassword, user.password)
+                  const match = bcrypt.compareSync(authPassword, provider.password)
                   if (match) {
                       // sucess
-                      userFound = 0;
-                      resolve(user);
+                      providerFound = 0;
+                      resolve(provider);
 
 
                   } else {
@@ -64,12 +64,12 @@ module.exports = class AuthService{
                   //resolve("User not found");
               }
           })
-          if(userFound >= 1){
+          if(providerFound >= 1){
             reject("Incorrect Password");
-            userFound = 0;
+            providerFound = 0;
           }
-          if(userFound == 0){
-            reject("User not found");
+          if(providerFound == 0){
+            reject("Provider account not found for this email");
           }
         })
           .catch(err => {
@@ -80,32 +80,31 @@ module.exports = class AuthService{
       
       }
 
-      register(AuthUser) {
+      register(AuthProvider) {
         return new Promise((resolve, reject) => {
   
-          User.prototype.getAll().then(users => {
-            const dbUser = users.filter(user =>{
-              return user.email == AuthUser.email
+          Provider.prototype.getAll().then(provider => {
+            const dbProvider = provider.filter(provider =>{
+              return provider.email == AuthProvider.email
             });
-            if(dbUser.length >= 1){
-              reject("User email is already registered");
+            if(dbProvider.length >= 1){
+              reject("Provider email is already registered with an account");
             } else {
 
-              const passwordHash = this.hashPassword(AuthUser.password);
+              const passwordHash = this.hashPassword(AuthProvider.password);
               console.log(passwordHash);
 
-              const newUser =
+              const newProvider =
                 {
-                  firstName: AuthUser.firstName,
-                  lastName: AuthUser.lastName,
-                  cellPhone: AuthUser.cellPhone,
-                  email: AuthUser.email,
+                  firstName: AuthProvider.firstName,
+                  lastName: AuthProvider.lastName,
+                  email: AuthProvider.email,
                   password: passwordHash,
-                  role: "user"
+                  dateCreated: AuthProvider.dateCreated
                 };
 
-              User.prototype.create(newUser).then(user =>{
-                resolve(user);
+              Provider.prototype.create(newProvider).then(provider =>{
+                resolve(provider);
               }).catch(err => {
                 reject(err);
               })
@@ -117,27 +116,3 @@ module.exports = class AuthService{
           });
       }
 };
-
-
-
-
-/*   return new Promise((resolve, reject) => {
-    mysqlConn.query("Select * from user where email = ? ", authEmail, function(
-        err,
-        res
-      ) {
-        if (err) {
-          console.log("error: ", err);
-          reject(err);
-        } else {
-          if(res == [])
-          {
-              resolve("User not found")
-          }
-          else {
-              resolve(res);
-          }
-        }
-      });
-    });
-  } */
