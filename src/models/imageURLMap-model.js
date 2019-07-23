@@ -49,9 +49,9 @@ module.exports = class ImageURLMap {
       });
       }
 
-      deleteByImageURL(img){
+      deleteByImageID(id){
         return new Promise((resolve, reject) => {
-          mysqlConn.query("DELETE FROM listing_image_mapping WHERE imageURL = ?", img, function(err, res) {
+          mysqlConn.query("DELETE FROM listing_image_mapping WHERE id = ?", id, function(err, res) {
               if (err) {
                 console.log("error: ", err);
                 reject(err);

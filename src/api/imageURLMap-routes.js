@@ -42,10 +42,10 @@ router.post("/deleteByListingID/:id", function (req, res) {
         });
 });
 
-router.post("/deleteByImageURL/:img", function (req, res) {
+router.post("/deleteByImageID/:id", function (req, res) {
     
     ImageURLMap.prototype
-        .deleteByImageURL(req.params.img)
+        .deleteByImageID(parseInt(req.params.id))
         .then(img => {
             res.send(img);
         })
