@@ -138,10 +138,50 @@ module.exports = class Listing {
               }
           });
 
+              //resolve(res);
+            }
+          });
+        });
+    }
 
 
 
+    getByProviderID(providerId){
+      return new Promise((resolve, reject) => {
+        mysqlConn.query("Select * from listing where providerID = ? ", providerId, function(
+            err,
+            res
+          ) {
+            if (err) {
+              console.log("error: ", err);
+              reject(err);
+            } else {
 
+              console.log("Listings : ", res);
+              //resolve(res);
+              let listings = res;
+              mysqlConn.query(
+                "Select * from listing_image_mapping WHERE listingID in (SELECT id FROM listing);",
+                //in (SELECT id FROM " + listings + ")",
+                function(err, res){
+                  if(err){
+                    console.log("error: ", err);
+                    reject(err);
+                  } else {
+                  listings.forEach(listing => {
+
+                    listing.imgUrl = [];
+
+                    res.forEach(imgUrl =>{
+                      if(imgUrl.listingID == listing.id){
+                        listing.imgUrl.push(imgUrl.imageURL);
+                      }
+                    });
+                  });
+                  console.log("Listings : ", res);
+                  resolve(listings);
+              }
+          });
 
               //resolve(res);
             }
@@ -149,12 +189,14 @@ module.exports = class Listing {
         });
     }
 
+
+
     // Working
     updateByID(listingId, listing){
       return new Promise((resolve, reject) => {
         mysqlConn.query(
-           "UPDATE listing SET service_provider_name = ?, name = ?, location = ?, price = ?, description = ? WHERE id = ?",
-            [listing.serviceProviderName, listing.name, listing.location, listing.price, listing.description, listingId],
+           "UPDATE listing SET providerID = ?, name = ?, location = ?, price = ?, description = ? WHERE id = ?",
+            [listing.providerID, listing.name, listing.location, listing.price, listing.description, listingId],
             function(err, res) {
               if (err) {
                 console.log("error: ", err);

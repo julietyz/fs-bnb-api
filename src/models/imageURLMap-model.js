@@ -21,4 +21,44 @@ module.exports = class ImageURLMap {
             });
           });
       }
+
+      create(newListing){
+        return new Promise((resolve, reject) => {
+          mysqlConn.query("INSERT INTO listing_image_mapping set ?", newListing, function(err, res) {
+            if (err) {
+              console.log("error: ", err);
+              reject(err);
+            } else {
+              console.log(res);
+              resolve(res);
+            }
+          });
+        });
+      }
+
+      deleteByListingID(listingID){
+        return new Promise((resolve, reject) => {
+          mysqlConn.query("DELETE FROM listing_image_mapping WHERE listingID = ?", listingID, function(err, res) {
+              if (err) {
+                console.log("error: ", err);
+                reject(err);
+              } else {
+                resolve(res);
+              }
+            });
+      });
+      }
+
+      deleteByImageURL(img){
+        return new Promise((resolve, reject) => {
+          mysqlConn.query("DELETE FROM listing_image_mapping WHERE imageURL = ?", img, function(err, res) {
+              if (err) {
+                console.log("error: ", err);
+                reject(err);
+              } else {
+                resolve(res);
+              }
+            });
+      });
+      }
 };

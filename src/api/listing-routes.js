@@ -45,6 +45,20 @@ router.get("/getByID/:id", function (req, res) {
         });
 });
 
+
+
+router.get("/getByProviderID/:id", function (req, res) {
+    
+    Listing.prototype
+        .getByProviderID(parseInt(req.params.id))
+        .then(listing => {
+            res.send(listing);
+        })
+        .catch(err => {
+            res.status(400).send(err);
+        });
+});
+
 // Working
 router.post("/updateByID", function (req, res) {
     
@@ -59,10 +73,10 @@ router.post("/updateByID", function (req, res) {
 });
 
 // Working
-router.post("/delete", function (req, res) {
+router.post("/delete/:id", function (req, res) {
     
     Listing.prototype
-        .delete(req.body.id)
+        .delete(parseInt(req.params.id))
         .then(listing => {
             res.send(listing);
         })

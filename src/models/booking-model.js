@@ -73,11 +73,27 @@ module.exports = class Booking {
         });
     }
 
+    getByListingID(listingID){
+      return new Promise((resolve, reject) => {
+        mysqlConn.query("Select * from booking where listingID = ? ", listingID, function(
+            err,
+            res
+          ) {
+            if (err) {
+              console.log("error: ", err);
+              reject(err);
+            } else {
+              resolve(res);
+            }
+          });
+        });
+    }
+
     updateByID(bookingID, booking){
       return new Promise((resolve, reject) => {
         mysqlConn.query(
-          "UPDATE booking SET providerID = ?, name = ?, location = ?, price = ?, description = ? WHERE bookingID = ?",
-          [booking.providerID, booking.name, booking.location, booking.price, booking.description, bookingID],
+          "UPDATE booking SET listingID = ?, userID = ?, dateFrom = ?, dateTo = ?, status = ? WHERE bookingID = ?",
+          [booking.listingID, booking.userID, booking.dateFrom, booking.dateTo, booking.status, bookingID],
             function(err, res) {
               if (err) {
                 console.log("error: ", err);
@@ -93,6 +109,19 @@ module.exports = class Booking {
     delete(bookingID){
       return new Promise((resolve, reject) => {
         mysqlConn.query("DELETE FROM booking WHERE bookingID = ?", bookingID, function(err, res) {
+            if (err) {
+              console.log("error: ", err);
+              reject(err);
+            } else {
+              resolve(res);
+            }
+          });
+    });
+    }
+
+    deleteByListingID(listingID){
+      return new Promise((resolve, reject) => {
+        mysqlConn.query("DELETE FROM booking WHERE listingID = ?", listingID, function(err, res) {
             if (err) {
               console.log("error: ", err);
               reject(err);

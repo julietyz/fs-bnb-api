@@ -53,11 +53,23 @@ router.get("/getByUserID/:id", function (req, res) {
         });
 });
 
+router.get("/getByListingID/:id", function (req, res) {
+    
+    Booking.prototype
+        .getByListingID(parseInt(req.params.id))
+        .then(booking => {
+            res.send(booking);
+        })
+        .catch(err => {
+            res.status(400).send(err);
+        });
+});
+
 // Working
 router.post("/updateByID", function (req, res) {
     
     Booking.prototype
-        .updateByID(req.body.id, req.body)
+        .updateByID(req.body.bookingID, req.body)
         .then(booking => {
             res.send(booking);
         })
@@ -67,10 +79,22 @@ router.post("/updateByID", function (req, res) {
 });
 
 // Working 
-router.post("/delete", function (req, res) {
+router.post("/delete:id", function (req, res) {
     
     Booking.prototype
-        .delete(req.body.id)
+        .delete(parseInt(req.params.id))
+        .then(booking => {
+            res.send(booking);
+        })
+        .catch(err => {
+            res.status(400).send(err);
+        });
+});
+
+router.post("/deleteByListingID/:id", function (req, res) {
+    
+    Booking.prototype
+        .deleteByListingID(parseInt(req.params.id))
         .then(booking => {
             res.send(booking);
         })
